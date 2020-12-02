@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+    margin: none;
+}
+
+body {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
+.asteroid-spawn {
+    background-color: blue;
+    height: 50vh;
+    position: relative;
+    width: 50vw;
+}
