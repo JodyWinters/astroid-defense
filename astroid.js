@@ -35,6 +35,15 @@ const moveAsteroid = function() {
             ast.a.style.left = ast.left + "px";
             ast.a.style.zIndex = ast.growth;
             ast.growth++;
+            if (ast.listener === "false") {
+              asteroid.a.addEventListener("click", destroy = () => {
+                console.log("i'm hit");
+                asteroid.a.removeEventListener("click", destroy);
+                ast.a.remove();
+                asteroids.splice(asteroids.indexOf(ast), 1);
+              });
+                ast.listener = "true";
+            }
         }
     }
 }
@@ -42,7 +51,7 @@ const moveAsteroid = function() {
 const makeAsteroid = function() {
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
-    asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
+    asteroid = {a: document.createElement("img"), listener: "false", height: rand2, velocity: .005, left: rand, size: 1, growth: 0};
     asteroid.a.setAttribute("src", "meteor.png");
     asteroid.a.style.width = 10 + "px";
     asteroid.a.style.height = 10 + "px";
