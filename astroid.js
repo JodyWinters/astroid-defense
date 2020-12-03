@@ -52,7 +52,7 @@ const makeAsteroid = function() {
     asteroids.push(asteroid);
 
     const ast = asteroid;
-    ast.a.addEventListener("click", () => {
+    ast.a.addEventListener("mousedown", () => {
         removeAsteroid(ast);
     });
 }
