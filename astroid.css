@@ -9,10 +9,11 @@ body {
     height: 100vh;
     justify-content: center;
     cursor: url('crosshair.png') 16 16, auto;
+    background-color: #1d1d1d;
 }
 
 .asteroid-spawn {
-    background-color: blue;
+    background-color: #1d1d1d;
     height: 50vh;
     position: relative;
     width: 50vw;
@@ -23,4 +24,5 @@ body {
     left: 1vw;
     position: fixed;
     top: 1vw;
+    color: white;
 }

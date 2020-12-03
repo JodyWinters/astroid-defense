@@ -53,7 +53,11 @@ const makeAsteroid = function() {
 
     const ast = asteroid;
     ast.a.addEventListener("click", () => {
+      ast.a.setAttribute("src", "cosmic-explosion.jpg");
+      ast.growth = ast.growth - 100;
+      let bombTimer = setTimeout(() => {
         removeAsteroid(ast);
+      }, 100);
     });
 }
 
