@@ -18,13 +18,13 @@ const moveasteroid = function() {
             ast.a.style.zIndex = ast.growth;
             ast.growth++;
             if (ast.listener === "false") {
-              asteroid.a.addEventListener("click", destroy = () => {
+              ast.a.addEventListener("click", destroy = () => {
                 console.log("i'm hit");
-                asteroid.a.removeEventListener("click", destroy);
+                ast.a.removeEventListener("click", destroy);
                 ast.a.remove();
                 asteroids.splice(asteroids.indexOf(ast), 1);
               });
-                ast.listener = "true";
+              ast.listener = "true";
             }
         }
     }
@@ -49,7 +49,7 @@ makeAsteroid();
 
 setInterval( () => {
     makeAsteroid();
-}, 800)
+}, 2000)
 
 setInterval( () => {
     moveasteroid();
