@@ -3,18 +3,22 @@ const spawnArea = document.querySelector(".asteroid-spawn");
 const asteroids = [];
 let health = 5;
 
+//Takes an asteroid object and removes from both the screen, and from the array
 const removeAsteroid = function(ast) {
     ast.a.remove();
     asteroids.splice(asteroids.indexOf(ast), 1);
 }
 
+//Moves the asteroid and removes it if it hits
 const moveAsteroid = function() {
     for (ast of asteroids) {
+        //If the asteroid hits, remove it and take one from health
         if (ast.growth >= 500) {
             removeAsteroid(ast);
             health--;
             document.querySelector(".health").firstElementChild.textContent = health;
 
+            //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
             if (health <= 0) {
                 clearInterval(makeInterval);
                 clearInterval(moveInterval);
@@ -24,6 +28,7 @@ const moveAsteroid = function() {
                 }
                 break;
             }
+        //If the asteroid didn't hit, move the it
         } else {
             ast.height -= ast.velocity / 2 * ast.size;
             ast.size += ast.velocity * ast.size;
@@ -38,6 +43,7 @@ const moveAsteroid = function() {
     }
 }
 
+//Makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
