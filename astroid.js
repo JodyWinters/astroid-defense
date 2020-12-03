@@ -4,13 +4,13 @@ const asteroids = [];
 
 const moveasteroid = function() {
     for (ast of asteroids) {
-        if (ast.growth === 1000) {
+        if (ast.growth >= 1100) {
             ast.a.remove();
             asteroids.splice(asteroids.indexOf(ast), 1)
         } else {
-            ast.height -= ast.velocity / 2;
-            ast.size += ast.velocity;
-            ast.left -= ast.velocity / 2;
+            ast.height -= ast.velocity / 2 * ast.size;
+            ast.size += ast.velocity * ast.size;
+            ast.left -= ast.velocity / 2 * ast.size;
             ast.a.style.top = ast.height + "px";
             ast.a.style.width = ast.size + "px";
             ast.a.style.height = ast.size + "px";
@@ -24,7 +24,7 @@ const moveasteroid = function() {
 const makeAsteroid = function() {
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
-    asteroid = {a: document.createElement("img"), height: rand2, velocity: .25, left: rand, size: 1, growth: 0};
+    asteroid = {a: document.createElement("img"), height: rand2, velocity: .005, left: rand, size: 1, growth: 0};
     asteroids.push(asteroid);
     asteroid.a.setAttribute("src", "meteor.png");
     asteroid.a.style.width = 10 + "px";
