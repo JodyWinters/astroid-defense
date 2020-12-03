@@ -51,7 +51,7 @@ const moveAsteroid = function() {
 const makeAsteroid = function() {
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
-    asteroid = {a: document.createElement("img"), listener: "false", height: rand2, velocity: .005, left: rand, size: 1, growth: 0};
+    asteroid = {a: document.createElement("img"), listener: "false", height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
     asteroid.a.setAttribute("src", "meteor.png");
     asteroid.a.style.width = 10 + "px";
     asteroid.a.style.height = 10 + "px";
