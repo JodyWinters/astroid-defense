@@ -1,12 +1,30 @@
 const spawnArea = document.querySelector(".asteroid-spawn");
 
 const asteroids = [];
+let health = 5;
 
-const moveasteroid = function() {
+const removeAsteroid = function(ast) {
+    ast.a.remove();
+    asteroids.splice(asteroids.indexOf(ast), 1);
+}
+
+const moveAsteroid = function() {
     for (ast of asteroids) {
-        if (ast.growth >= 1100) {
-            ast.a.remove();
-            asteroids.splice(asteroids.indexOf(ast), 1)
+        if (ast.growth >= 500) {
+            removeAsteroid(ast);
+            console.log(health);
+            health--;
+            document.querySelector(".health").firstElementChild.textContent = health;
+
+            if (health <= 0) {
+                clearInterval(makeInterval);
+                clearInterval(moveInterval);
+                console.log("you died");
+                for (a of asteroids) {
+                    removeAsteroid(a);
+                }
+                break;
+            }
         } else {
             ast.height -= ast.velocity / 2 * ast.size;
             ast.size += ast.velocity * ast.size;
@@ -24,8 +42,7 @@ const moveasteroid = function() {
 const makeAsteroid = function() {
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
-    asteroid = {a: document.createElement("img"), height: rand2, velocity: .005, left: rand, size: 1, growth: 0};
-    asteroids.push(asteroid);
+    asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
     asteroid.a.setAttribute("src", "meteor.png");
     asteroid.a.style.width = 10 + "px";
     asteroid.a.style.height = 10 + "px";
@@ -38,10 +55,10 @@ const makeAsteroid = function() {
 
 makeAsteroid();
 
-setInterval( () => {
+const makeInterval = setInterval( () => {
     makeAsteroid();
-}, 1000)
+}, 1000);
 
-setInterval( () => {
-    moveasteroid();
+const moveInterval = setInterval( () => {
+    moveAsteroid();
 }, 0);

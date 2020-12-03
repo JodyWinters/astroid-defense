@@ -16,3 +16,10 @@ body {
     position: relative;
     width: 50vw;
 }
+
+.health {
+    font-size: 2em;
+    left: 1vw;
+    position: fixed;
+    top: 1vw;
+}
