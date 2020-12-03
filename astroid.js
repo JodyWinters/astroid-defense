@@ -65,8 +65,4 @@ const makeInterval = setInterval( () => {
 
 const moveInterval = setInterval( () => {
     moveAsteroid();
-<<<<<<< HEAD
 }, 0);
-=======
-}, 0);
->>>>>>> 7b44fc884a4c20c7c1967fef92b23d684751f400
