@@ -2,6 +2,8 @@ const spawnArea = document.querySelector(".asteroid-spawn");
 
 const asteroids = [];
 let health = 5;
+let score = 0;
+let highScore = -Infinity;
 
 //Takes an asteroid object and removes from both the screen, and from the array
 const removeAsteroid = function(ast) {
@@ -22,9 +24,16 @@ const moveAsteroid = function() {
             if (health <= 0) {
                 clearInterval(makeInterval);
                 clearInterval(moveInterval);
+                clearInterval(scoreInterval);
                 console.log("you died");
                 for (a of asteroids) {
                     removeAsteroid(a);
+                }
+
+                if (score > highScore) {
+                    highScore = score;
+
+                    document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
                 }
                 break;
             }
@@ -57,13 +66,14 @@ const makeAsteroid = function() {
     spawnArea.appendChild(asteroid.a);
     asteroids.push(asteroid);
 
+    //Make it explode, then disappear when clicked
     const ast = asteroid;
-    ast.a.addEventListener("mousedown", () => {
-      ast.a.setAttribute("src", "cosmic-explosion.jpg");
-      ast.growth = ast.growth - 100;
-      let bombTimer = setTimeout(() => {
-        removeAsteroid(ast);
-      }, 100);
+    ast.a.addEventListener("mousedown", (event) => {
+        ast.a.setAttribute("src", "cosmic-explosion.jpg");
+        ast.growth = ast.growth - 100;
+        let bombTimer = setTimeout(() => {
+            removeAsteroid(ast);
+        }, 100);
     });
 }
 
@@ -76,3 +86,8 @@ const makeInterval = setInterval( () => {
 const moveInterval = setInterval( () => {
     moveAsteroid();
 }, 0);
+
+const scoreInterval = setInterval( () => {
+    score++;
+    document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
+}, 100);

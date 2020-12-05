@@ -19,10 +19,15 @@ body {
     width: 50vw;
 }
 
-.health {
+.stats {
     font-size: 2em;
-    left: 1vw;
+    left: 2vw;
     position: fixed;
-    top: 1vw;
+    top: 2vw;
     color: white;
+}
+
+.health,
+.current-score {
+    margin-top: 1vw;
 }
