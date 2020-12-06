@@ -1,5 +1,10 @@
 const spawnArea = document.querySelector(".asteroid-spawn");
-
+const startButton = document.querySelector("button");
+const statsArea = document.querySelector(".stats");
+//const highScoreButton = document.querySelector("button:last-of-type");
+//const title = document.querySelector('h1');
+//const instructionBox = document.querySelector('.instructions');
+const header = document.querySelector('header');
 const asteroids = [];
 let health = 5;
 let score = 0;
@@ -20,23 +25,7 @@ const moveAsteroid = function() {
             health--;
             document.querySelector(".health").firstElementChild.textContent = health;
 
-            //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
-            if (health <= 0) {
-                clearInterval(makeInterval);
-                clearInterval(moveInterval);
-                clearInterval(scoreInterval);
-                console.log("you died");
-                for (a of asteroids) {
-                    removeAsteroid(a);
-                }
 
-                if (score > highScore) {
-                    highScore = score;
-
-                    document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
-                }
-                break;
-            }
         //If the asteroid didn't hit, move the it
         } else {
             ast.height -= ast.velocity / 2 * ast.size;
@@ -76,18 +65,48 @@ const makeAsteroid = function() {
         }, 100);
     });
 }
+const startGame = function() {
 
-makeAsteroid();
+//  makeAsteroid();
 
-const makeInterval = setInterval( () => {
-    makeAsteroid();
-}, 1000);
+  const makeInterval = setInterval( () => {
+      makeAsteroid();
+  }, 1000);
 
-const moveInterval = setInterval( () => {
-    moveAsteroid();
-}, 0);
+  const moveInterval = setInterval( () => {
+      moveAsteroid();
+  }, 0);
 
-const scoreInterval = setInterval( () => {
-    score++;
-    document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
-}, 100);
+  const scoreInterval = setInterval( () => {
+      score++;
+      document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
+  }, 100);
+
+  const healthInterval = setInterval( () =>{
+    //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
+    if (health <= 0) {
+        clearInterval(makeInterval);
+        clearInterval(moveInterval);
+        clearInterval(scoreInterval);
+        console.log("you died");
+        for (a of asteroids) {
+            removeAsteroid(a);
+        }
+
+        if (score > highScore) {
+            highScore = score;
+
+            document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
+        }
+        clearInterval(healthInterval);
+    };
+  }, 0);
+};
+//Listener that starts game when start button is pressed
+startButton.addEventListener("click", start => {
+  startButton.removeEventListener("click", start);
+  header.remove();
+  statsArea.style.color = "white";
+  startGame();
+})
+//startGame();
