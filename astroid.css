@@ -22,7 +22,7 @@ header {
   align-items: center;
   flex-direction: column;
   color: white;
-  font-family: 'Libre Baskerville';
+  font-family: 'Libre Baskerville', sans-serif, arial;
 }
 
 h1, section {
@@ -58,12 +58,17 @@ section p {
 }
 
 button {
-  width: 100px;
-  height: 40px;
+  border: 2px solid white;
+  background-color: #00000000;
+  width: 120px;
+  height: 55px;
+  color: white;
+  font-size: 20px;
 }
 
 button:hover {
   cursor: url('crosshair.png') 16 16, auto;
+  border: 2px solid orange;
 }
 
 h1 {
@@ -71,7 +76,7 @@ h1 {
   text-transform: uppercase;
   width: 700px;
   font-size: 60px;
-  font-family: 'Monoton';
+  font-family: 'Monoton', sans-serif, arial;
   font-weight: 100;
 }
 
