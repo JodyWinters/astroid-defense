@@ -11,11 +11,14 @@ const asteroids = [];
 let health = 5;
 let score = 0;
 let highScore = -Infinity;
+let tracker = 0;
 
 const removeIntervals = function() {
     clearInterval(makeInterval);
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
+    clearInterval(makeTracker);
+    clearTimeout(makePause);
 
     body.removeEventListener("keydown", pause);
 }
@@ -78,17 +81,16 @@ const makeAsteroid = function() {
     asteroids.push(asteroid);
 
     //Make it explode, then disappear when clicked
-    const ast = asteroid;
-    ast.a.addEventListener("mousedown", (event) => {
+    asteroidClick = (event) => {
         ast.a.setAttribute("src", "cosmic-explosion.jpg");
         ast.growth = ast.growth - 100;
         let bombTimer = setTimeout(() => {
             removeAsteroid(ast);
         }, 100);
-    });
+    }
+    const ast = asteroid;
+    ast.a.addEventListener("mousedown", asteroidClick);
 }
-
-//  makeAsteroid();
 
 const pause = function(event) {
     removeIntervals();
@@ -98,10 +100,22 @@ const pause = function(event) {
 }
 
 const startIntervals = function() {
-    makeInterval = setInterval( () => {
+    makeTracker = setInterval( () => {
+        tracker++;
+
+        if (tracker >= 1000) {
+            tracker = 0;
+        }
+    }, 1);
+
+    makePause = setTimeout( () => {
         makeAsteroid();
-    }, 1000);
-    
+
+        makeInterval = setInterval( () => {
+            makeAsteroid();
+        }, 1000);
+    }, tracker);
+
     moveInterval = setInterval( () => {
         moveAsteroid();
     }, 0);
@@ -116,8 +130,6 @@ const startIntervals = function() {
 }
 
 const startGame = function() {
-    makeAsteroid();
-
     startIntervals();
 
     body.addEventListener("keydown", pause);
