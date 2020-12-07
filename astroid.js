@@ -81,7 +81,7 @@ const makeAsteroid = function() {
     asteroids.push(asteroid);
 
     //Make it explode, then disappear when clicked
-    asteroidClick = (event) => {
+    const asteroidClick = (event) => {
         ast.a.setAttribute("src", "cosmic-explosion.jpg");
         ast.growth = ast.growth - 100;
         let bombTimer = setTimeout(() => {
