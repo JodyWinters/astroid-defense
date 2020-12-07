@@ -97,15 +97,18 @@ const makeAsteroid = function() {
 }
 
 const pause = function(event) {
-    removeIntervals();
+    if (event.key === " ") {
+        removeIntervals();
 
-    body.removeEventListener("keydown", pause);
-    body.addEventListener("keydown", startIntervals);
+        body.removeEventListener("keydown", pause);
+        body.addEventListener("keydown", startIntervals);
+    }
 }
 
 const startIntervals = function() {
-  makeTracker = setInterval( () => {
-      tracker++;
+  if (!event || event.key === " "){
+      makeTracker = setInterval( () => {
+          tracker++;
 
       if (tracker >= 1000) {
           tracker = 0;
