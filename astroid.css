@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
-    margin: none;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -9,11 +10,77 @@ body {
     height: 100vh;
     justify-content: center;
     cursor: url('crosshair.png') 16 16, auto;
-    background-color: #1d1d1d;
+    background-image: url("space-background.jpeg");
+}
+
+header {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-family: 'Libre Baskerville', sans-serif, arial;
+}
+
+h1, section {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 30px;
+  padding-bottom: 20px;
+}
+
+section:first-of-type {
+  width: 500px;
+  height: 300px;
+  border: 2px solid white;
+  padding: 20px 15px 0 15px;
+}
+
+section p {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.buttons {
+  display: flex;
+  width: 500px;
+  height: 40px;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 50px;
+}
+
+button {
+  border: 2px solid white;
+  background-color: #00000000;
+  width: 120px;
+  height: 55px;
+  color: white;
+  font-size: 20px;
+}
+
+button:hover {
+  cursor: url('crosshair.png') 16 16, auto;
+  border: 2px solid orange;
+}
+
+h1 {
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  width: 700px;
+  font-size: 60px;
+  font-family: 'Monoton', sans-serif, arial;
+  font-weight: 100;
 }
 
 .asteroid-spawn {
-    background-color: #1d1d1d;
     height: 50vh;
     position: relative;
     width: 50vw;
@@ -24,10 +91,11 @@ body {
     left: 2vw;
     position: fixed;
     top: 2vw;
-    color: white;
+    color: #00000000;
 }
 
 .health,
 .current-score {
     margin-top: 1vw;
+    text-transform: uppercase;
 }

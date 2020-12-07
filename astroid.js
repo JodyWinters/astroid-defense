@@ -1,6 +1,12 @@
 const spawnArea = document.querySelector(".asteroid-spawn");
 const body = document.querySelector("body");
 
+const startButton = document.querySelector("button");
+const statsArea = document.querySelector(".stats");
+//const highScoreButton = document.querySelector("button:last-of-type");
+//const title = document.querySelector('h1');
+//const instructionBox = document.querySelector('.instructions');
+const header = document.querySelector('header');
 const asteroids = [];
 let health = 5;
 let score = 0;
@@ -40,10 +46,7 @@ const moveAsteroid = function() {
 
                 if (score > highScore) {
                     highScore = score;
-
-                    document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
                 }
-                break;
             }
         //If the asteroid didn't hit, move the it
         } else {
@@ -85,7 +88,7 @@ const makeAsteroid = function() {
     });
 }
 
-makeAsteroid();
+//  makeAsteroid();
 
 const pause = function(event) {
     removeIntervals();
@@ -112,6 +115,19 @@ const startIntervals = function() {
     body.addEventListener("keydown", pause);
 }
 
-startIntervals();
+const startGame = function() {
+    makeAsteroid();
 
-body.addEventListener("keydown", pause);
+    startIntervals();
+
+    body.addEventListener("keydown", pause);
+}
+
+//Listener that starts game when start button is pressed
+startButton.addEventListener("click", start => {
+  startButton.removeEventListener("click", start);
+  header.remove();
+  statsArea.style.color = "white";
+  startGame();
+});
+//startGame();

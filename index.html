@@ -3,11 +3,24 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="astroid.css">
-    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <title>ASTEROID DEFENSE</title>
   </head>
   <body>
+    <header>
+      <h1>Asteroid Defense</h1>
+      <section class="instructions">
+        <h2>INSTRUCTIONS</h2>
+        <p>Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Good luck and have fun!</p>
+      </section>
+      <section class="buttons">
+        <button>START</button>
+        <button>HIGH SCORES</button>
+      </section>
+    </header>
     <div class="asteroid-spawn"></div>
-    
+
     <div class="stats">
       <div class="score">
         <div>High: <span class="high-score">0000</span></div>
@@ -16,7 +29,6 @@
 
       <div class="health">health: <span>5</span></div>
     </div>
-
     <script src="astroid.js"></script>
   </body>
 </html>
