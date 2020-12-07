@@ -1,10 +1,14 @@
+//querySelectors, variables and arrays for the project
 const spawnArea = document.querySelector(".asteroid-spawn");
 const startButton = document.querySelector("button");
 const statsArea = document.querySelector(".stats");
-//const highScoreButton = document.querySelector("button:last-of-type");
-//const title = document.querySelector('h1');
-//const instructionBox = document.querySelector('.instructions');
+const highScoreButton = document.querySelector("button:last-of-type");
+const title = document.querySelector('h1');
+const instructionsSection = document.querySelector('.instructions');
+const instructionsPara = document.querySelector('p');
 const header = document.querySelector('header');
+const instructionsTitle = document.querySelector('h2');
+const styles = [title, instructionsPara, instructionsTitle, highScoreButton, instructionsSection, startButton];
 const asteroids = [];
 let health = 5;
 let score = 0;
@@ -92,21 +96,40 @@ const startGame = function() {
         for (a of asteroids) {
             removeAsteroid(a);
         }
-
+        for (index of styles) {
+          index.style.color = "white";
+        }
+        header.style.zIndex = "10";
+        startButton.style.border = "2px solid white";
+        highScoreButton.style.border = "2px solid white";
+        instructionsSection.style.border = "2px solid white";
+        statsArea.style.color = "#00000000";
+        instructionsTitle.textContent = "Your ship had been destroyed"
+        instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
+        instructionsPara.style.whiteSpace = "pre-line";
         if (score > highScore) {
             highScore = score;
 
             document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
-        }
+        };
         clearInterval(healthInterval);
+        startButton.addEventListener("click", startAgain => {
+          console.log("I'm active");
+        });
     };
   }, 0);
 };
 //Listener that starts game when start button is pressed
 startButton.addEventListener("click", start => {
   startButton.removeEventListener("click", start);
-  header.remove();
+  header.style.zIndex = "-10";
+  for (index of styles) {
+    index.style.color = "#00000000";
+    index.style.border = "none";
+
+  }
+
   statsArea.style.color = "white";
   startGame();
-})
+});
 //startGame();

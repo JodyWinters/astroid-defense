@@ -46,6 +46,7 @@ section:first-of-type {
 section p {
   font-size: 20px;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .buttons {
@@ -69,6 +70,10 @@ button {
 button:hover {
   cursor: url('crosshair.png') 16 16, auto;
   border: 2px solid orange;
+}
+button:focus {
+  outline: none;
+
 }
 
 h1 {
