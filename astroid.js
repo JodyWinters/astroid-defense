@@ -42,20 +42,7 @@ const moveAsteroid = function() {
             health--;
             document.querySelector(".health").firstElementChild.textContent = health;
 
-            //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
-            if (health <= 0) {
-                removeIntervals();
-
-                console.log("you died");
-                for (a of asteroids) {
-                    removeAsteroid(a);
-                }
-
-                if (score > highScore) {
-                    highScore = score;
-                }
-            }
-        //If the asteroid didn't hit, move the it
+        //If the asteroid didn't hit, move it
         } else {
             ast.height -= ast.velocity / 2 * ast.size;
             ast.size += ast.velocity * ast.size;
