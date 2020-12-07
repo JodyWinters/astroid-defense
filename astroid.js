@@ -1,5 +1,7 @@
 //querySelectors, variables and arrays for the project
 const spawnArea = document.querySelector(".asteroid-spawn");
+const body = document.querySelector("body");
+
 const startButton = document.querySelector("button");
 const statsArea = document.querySelector(".stats");
 const highScoreButton = document.querySelector("button:last-of-type");
@@ -13,6 +15,17 @@ const asteroids = [];
 let health = 5;
 let score = 0;
 let highScore = -Infinity;
+let tracker = 0;
+
+const removeIntervals = function() {
+    clearInterval(makeInterval);
+    clearInterval(moveInterval);
+    clearInterval(scoreInterval);
+    clearInterval(makeTracker);
+    clearTimeout(makePause);
+
+    body.removeEventListener("keydown", pause);
+}
 
 //Takes an asteroid object and removes from both the screen, and from the array
 const removeAsteroid = function(ast) {
@@ -29,7 +42,19 @@ const moveAsteroid = function() {
             health--;
             document.querySelector(".health").firstElementChild.textContent = health;
 
+            //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
+            if (health <= 0) {
+                removeIntervals();
 
+                console.log("you died");
+                for (a of asteroids) {
+                    removeAsteroid(a);
+                }
+
+                if (score > highScore) {
+                    highScore = score;
+                }
+            }
         //If the asteroid didn't hit, move the it
         } else {
             ast.height -= ast.velocity / 2 * ast.size;
@@ -60,65 +85,94 @@ const makeAsteroid = function() {
     asteroids.push(asteroid);
 
     //Make it explode, then disappear when clicked
-    const ast = asteroid;
-    ast.a.addEventListener("mousedown", (event) => {
+    const asteroidClick = (event) => {
         ast.a.setAttribute("src", "cosmic-explosion.jpg");
         ast.growth = ast.growth - 100;
         let bombTimer = setTimeout(() => {
             removeAsteroid(ast);
         }, 100);
-    });
+    }
+    const ast = asteroid;
+    ast.a.addEventListener("mousedown", asteroidClick);
 }
-const startGame = function() {
 
-//  makeAsteroid();
+const pause = function(event) {
+    removeIntervals();
 
-  const makeInterval = setInterval( () => {
-      makeAsteroid();
-  }, 1000);
+    body.removeEventListener("keydown", pause);
+    body.addEventListener("keydown", startIntervals);
+}
 
-  const moveInterval = setInterval( () => {
-      moveAsteroid();
-  }, 0);
+const startIntervals = function() {
+    makeTracker = setInterval( () => {
+        tracker++;
 
-  const scoreInterval = setInterval( () => {
-      score++;
-      document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
-  }, 100);
-
-  const healthInterval = setInterval( () =>{
-    //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
-    if (health <= 0) {
-        clearInterval(makeInterval);
-        clearInterval(moveInterval);
-        clearInterval(scoreInterval);
-        console.log("you died");
-        for (a of asteroids) {
-            removeAsteroid(a);
+        if (tracker >= 1000) {
+            tracker = 0;
         }
-        for (index of styles) {
-          index.style.color = "white";
-        }
-        header.style.zIndex = "10";
-        startButton.style.border = "2px solid white";
-        highScoreButton.style.border = "2px solid white";
-        instructionsSection.style.border = "2px solid white";
-        statsArea.style.color = "#00000000";
-        instructionsTitle.textContent = "Your ship had been destroyed"
-        instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
-        instructionsPara.style.whiteSpace = "pre-line";
-        if (score > highScore) {
-            highScore = score;
+    }, 1);
 
-            document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
-        };
-        clearInterval(healthInterval);
-        startButton.addEventListener("click", startAgain => {
-          console.log("I'm active");
-        });
-    };
-  }, 0);
+    makePause = setTimeout( () => {
+        makeAsteroid();
+
+        makeInterval = setInterval( () => {
+            makeAsteroid();
+        }, 1000);
+    }, tracker);
+
+    moveInterval = setInterval( () => {
+        moveAsteroid();
+    }, 0);
+
+    scoreInterval = setInterval( () => {
+        score++;
+        document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
+    }, 100);
+
+    body.removeEventListener("keydown", startIntervals);
+    body.addEventListener("keydown", pause);
+
+    const healthInterval = setInterval( () =>{
+      //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
+      if (health <= 0) {
+          clearInterval(makeInterval);
+          clearInterval(moveInterval);
+          clearInterval(scoreInterval);
+          console.log("you died");
+          for (a of asteroids) {
+              removeAsteroid(a);
+          }
+          for (index of styles) {
+            index.style.color = "white";
+          }
+          header.style.zIndex = "10";
+          startButton.style.border = "2px solid white";
+          highScoreButton.style.border = "2px solid white";
+          instructionsSection.style.border = "2px solid white";
+          statsArea.style.color = "#00000000";
+          instructionsTitle.textContent = "Your ship had been destroyed"
+          instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
+          instructionsPara.style.whiteSpace = "pre-line";
+          if (score > highScore) {
+              highScore = score;
+
+              document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
+          };
+          clearInterval(healthInterval);
+          startButton.addEventListener("click", startAgain => {
+            console.log("I'm active");
+          });
+      };
+    }, 0);
+  };
 };
+
+const startGame = function() {
+    startIntervals();
+
+    body.addEventListener("keydown", pause);
+}
+
 //Listener that starts game when start button is pressed
 startButton.addEventListener("click", start => {
   startButton.removeEventListener("click", start);
