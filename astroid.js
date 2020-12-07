@@ -93,40 +93,44 @@ const makeAsteroid = function() {
 }
 
 const pause = function(event) {
-    removeIntervals();
+    if (event.key === " ") {
+        removeIntervals();
 
-    body.removeEventListener("keydown", pause);
-    body.addEventListener("keydown", startIntervals);
+        body.removeEventListener("keydown", pause);
+        body.addEventListener("keydown", startIntervals);
+    }
 }
 
-const startIntervals = function() {
-    makeTracker = setInterval( () => {
-        tracker++;
-
-        if (tracker >= 1000) {
-            tracker = 0;
-        }
-    }, 1);
-
-    makePause = setTimeout( () => {
-        makeAsteroid();
-
-        makeInterval = setInterval( () => {
-            makeAsteroid();
-        }, 1000);
-    }, tracker);
-
-    moveInterval = setInterval( () => {
-        moveAsteroid();
-    }, 0);
+const startIntervals = function(event) {
+    if (!event || event.key === " "){
+        makeTracker = setInterval( () => {
+            tracker++;
     
-    scoreInterval = setInterval( () => {
-        score++;
-        document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
-    }, 100);
-
-    body.removeEventListener("keydown", startIntervals);
-    body.addEventListener("keydown", pause);
+            if (tracker >= 1000) {
+                tracker = 0;
+            }
+        }, 1);
+    
+        makePause = setTimeout( () => {
+            makeAsteroid();
+    
+            makeInterval = setInterval( () => {
+                makeAsteroid();
+            }, 1000);
+        }, tracker);
+    
+        moveInterval = setInterval( () => {
+            moveAsteroid();
+        }, 0);
+        
+        scoreInterval = setInterval( () => {
+            score++;
+            document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
+        }, 100);
+    
+        body.removeEventListener("keydown", startIntervals);
+        body.addEventListener("keydown", pause);
+    }
 }
 
 const startGame = function() {
