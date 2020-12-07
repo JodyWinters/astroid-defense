@@ -1,9 +1,18 @@
 const spawnArea = document.querySelector(".asteroid-spawn");
+const body = document.querySelector("body");
 
 const asteroids = [];
 let health = 5;
 let score = 0;
 let highScore = -Infinity;
+
+const removeIntervals = function() {
+    clearInterval(makeInterval);
+    clearInterval(moveInterval);
+    clearInterval(scoreInterval);
+
+    body.removeEventListener("keydown", pause);
+}
 
 //Takes an asteroid object and removes from both the screen, and from the array
 const removeAsteroid = function(ast) {
@@ -22,9 +31,8 @@ const moveAsteroid = function() {
 
             //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
             if (health <= 0) {
-                clearInterval(makeInterval);
-                clearInterval(moveInterval);
-                clearInterval(scoreInterval);
+                removeIntervals();
+
                 console.log("you died");
                 for (a of asteroids) {
                     removeAsteroid(a);
@@ -79,15 +87,31 @@ const makeAsteroid = function() {
 
 makeAsteroid();
 
-const makeInterval = setInterval( () => {
-    makeAsteroid();
-}, 1000);
+const pause = function(event) {
+    removeIntervals();
 
-const moveInterval = setInterval( () => {
-    moveAsteroid();
-}, 0);
+    body.removeEventListener("keydown", pause);
+    body.addEventListener("keydown", startIntervals);
+}
 
-const scoreInterval = setInterval( () => {
-    score++;
-    document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
-}, 100);
+const startIntervals = function() {
+    makeInterval = setInterval( () => {
+        makeAsteroid();
+    }, 1000);
+    
+    moveInterval = setInterval( () => {
+        moveAsteroid();
+    }, 0);
+    
+    scoreInterval = setInterval( () => {
+        score++;
+        document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
+    }, 100);
+
+    body.removeEventListener("keydown", startIntervals);
+    body.addEventListener("keydown", pause);
+}
+
+startIntervals();
+
+body.addEventListener("keydown", pause);
