@@ -93,14 +93,15 @@ const pause = function(event) {
 }
 
 const startIntervals = function() {
-  if (!event || event.key === " "){
-      makeTracker = setInterval( () => {
-          tracker++;
+    if (!event || event.key === " "){
+        makeTracker = setInterval( () => {
+            tracker++;
 
-      if (tracker >= 1000) {
-          tracker = 0;
-      }
-  }, 1);
+            if (tracker >= 1000) {
+                tracker = 0;
+            }
+        }, 1);
+    }
 
   makePause = setTimeout( () => {
       makeAsteroid();
