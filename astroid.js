@@ -16,13 +16,15 @@ let health = 5;
 let score = 0;
 let highScore = -Infinity;
 let tracker = 0;
+let spawnRate = 1000;
+let gameStop = false;
 
 const removeIntervals = function() {
-    clearInterval(makeInterval);
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
     clearInterval(makeTracker);
     clearTimeout(makePause);
+    gameStop = true;
 
     body.removeEventListener("keydown", pause);
 }
@@ -57,8 +59,9 @@ const moveAsteroid = function() {
     }
 }
 
-//Makes an asteroid object, and adds it to the spawnArea and to an array
+//Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
+    spawnRate -= 5;
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
     asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
@@ -81,6 +84,12 @@ const makeAsteroid = function() {
     }
     const ast = asteroid;
     ast.a.addEventListener("mousedown", asteroidClick);
+
+    setTimeout( () => {
+        if (!gameStop) {
+            makeAsteroid();
+        }
+    }, spawnRate);
 }
 
 const pause = function(event) {
@@ -100,11 +109,7 @@ const startIntervals = function() {
     }, 1);
 
   makePause = setTimeout( () => {
-      makeAsteroid();
-
-      makeInterval = setInterval( () => {
-          makeAsteroid();
-      }, 1000);
+    makeAsteroid();
   }, tracker);
 
   moveInterval = setInterval( () => {
@@ -122,9 +127,7 @@ const startIntervals = function() {
   const healthInterval = setInterval( () =>{
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
-      clearInterval(makeInterval);
-      clearInterval(moveInterval);
-      clearInterval(scoreInterval);
+      removeIntervals();
       for (a of asteroids) {
           removeAsteroid(a);
       }
