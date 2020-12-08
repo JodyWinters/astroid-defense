@@ -84,24 +84,20 @@ const makeAsteroid = function() {
 }
 
 const pause = function(event) {
-    if (event.key === " ") {
-        removeIntervals();
+    removeIntervals();
 
-        body.removeEventListener("keydown", pause);
-        body.addEventListener("keydown", startIntervals);
-    }
+    body.removeEventListener("keydown", pause);
+    body.addEventListener("keydown", startIntervals);
 }
 
 const startIntervals = function() {
-    if (!event || event.key === " "){
-        makeTracker = setInterval( () => {
-            tracker++;
+    makeTracker = setInterval( () => {
+        tracker++;
 
-            if (tracker >= 1000) {
-                tracker = 0;
-            }
-        }, 1);
-    }
+        if (tracker >= 1000) {
+            tracker = 0;
+        }
+    }, 1);
 
   makePause = setTimeout( () => {
       makeAsteroid();
@@ -138,7 +134,7 @@ const startIntervals = function() {
       highScoreButton.style.border = "2px solid white";
       instructionsSection.style.border = "2px solid white";
       statsArea.style.color = "#00000000";
-      instructionsTitle.textContent = "Your ship had been destroyed"
+      instructionsTitle.textContent = "Your ship has been destroyed"
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       instructionsPara.style.whiteSpace = "pre-line";
       if (score > highScore) {
