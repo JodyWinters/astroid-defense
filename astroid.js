@@ -21,7 +21,7 @@ const removeIntervals = function() {
     clearInterval(makeInterval);
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
-    clearInterval(makeTracker);
+//    clearInterval(makeTracker);
     clearTimeout(makePause);
 
     body.removeEventListener("keydown", pause);
@@ -126,10 +126,7 @@ const startIntervals = function() {
   const healthInterval = setInterval( () =>{
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
-      clearInterval(makeInterval);
-      clearInterval(moveInterval);
-      clearInterval(scoreInterval);
-      console.log("you died");
+      removeIntervals();
       for (a of asteroids) {
           removeAsteroid(a);
       }
@@ -150,8 +147,23 @@ const startIntervals = function() {
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
       clearInterval(healthInterval);
+      console.log(asteroids);
+      const remove = asteroids.shift();
       startButton.addEventListener("click", startAgain => {
-        console.log("I'm active");
+        startButton.removeEventListener("click", startAgain);
+        header.style.zIndex = "-10";
+        for (index of styles) {
+          index.style.color = "#00000000";
+          index.style.border = "none";
+
+        }
+        health = 5;
+        document.querySelector(".health").firstElementChild.textContent = health;
+        score = 0;
+        tracker = 0;
+        statsArea.style.color = "white";
+        removeIntervals();
+        startGame();
       });
     };
   }, 0);
@@ -172,8 +184,8 @@ startButton.addEventListener("click", start => {
     index.style.border = "none";
 
   }
-
   statsArea.style.color = "white";
+
   startGame();
 });
 //startGame();
