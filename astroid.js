@@ -84,20 +84,24 @@ const makeAsteroid = function() {
 }
 
 const pause = function(event) {
-    removeIntervals();
+    if (event.key === " ") {
+        removeIntervals();
 
-    body.removeEventListener("keydown", pause);
-    body.addEventListener("keydown", startIntervals);
+        body.removeEventListener("keydown", pause);
+        body.addEventListener("keydown", startIntervals);
+    }
 }
 
 const startIntervals = function() {
-    makeTracker = setInterval( () => {
-        tracker++;
+    if (!event || event.key === " "){
+        makeTracker = setInterval( () => {
+            tracker++;
 
-        if (tracker >= 1000) {
-            tracker = 0;
-        }
-    }, 1);
+            if (tracker >= 1000) {
+                tracker = 0;
+            }
+        }, 1);
+    }
 
   makePause = setTimeout( () => {
       makeAsteroid();
@@ -129,12 +133,13 @@ const startIntervals = function() {
       for (index of styles) {
         index.style.color = "white";
       }
+
       header.style.zIndex = "10";
       startButton.style.border = "2px solid white";
       highScoreButton.style.border = "2px solid white";
       instructionsSection.style.border = "2px solid white";
       statsArea.style.color = "#00000000";
-      instructionsTitle.textContent = "Your ship has been destroyed"
+      instructionsTitle.textContent = "Your ship had been destroyed"
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       instructionsPara.style.whiteSpace = "pre-line";
       if (score > highScore) {
@@ -143,16 +148,14 @@ const startIntervals = function() {
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
       clearInterval(healthInterval);
-      console.log(asteroids);
       const remove = asteroids.shift();
+
       startButton.addEventListener("click", startAgain => {
         startButton.removeEventListener("click", startAgain);
         header.style.zIndex = "-10";
         for (index of styles) {
           index.style.color = "#00000000";
-          index.style.border = "none";
-
-        }
+        };
         health = 5;
         document.querySelector(".health").firstElementChild.textContent = health;
         score = 0;
