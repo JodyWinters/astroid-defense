@@ -16,13 +16,13 @@ let health = 5;
 let score = 0;
 let highScore = -Infinity;
 let tracker = 0;
-let spawnRate = 1000;
+const startSpawnRate = 1000;
+let spawnRate = startSpawnRate;
 let gameStop = false;
 
 const removeIntervals = function() {
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
-//    clearInterval(makeTracker);
     clearTimeout(makePause);
     gameStop = true;
 
@@ -62,6 +62,7 @@ const moveAsteroid = function() {
 //Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
     spawnRate -= 5;
+    console.log(spawnRate);
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
     asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
@@ -167,6 +168,8 @@ const startIntervals = function() {
         tracker = 0;
         statsArea.style.color = "white";
         removeIntervals();
+        gameStop = false;
+        spawnRate = startSpawnRate;
         startGame();
       });
     };
