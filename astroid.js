@@ -1,4 +1,4 @@
-//querySelectors, variables and arrays for the project
+//querySelectors for the project
 const spawnArea = document.querySelector(".asteroid-spawn");
 const body = document.querySelector("body");
 const healthDisplay = document.querySelector(".health").firstElementChild;
@@ -10,9 +10,17 @@ const instructionsSection = document.querySelector('.instructions');
 const instructionsPara = document.querySelector('p');
 const header = document.querySelector('header');
 const instructionsTitle = document.querySelector('h2');
+const scoreList = document.querySelector('.scoreList');
+const places = document.querySelector('.placement');
+const names = document.querySelector('.names');
+const highScores = document.querySelector('.highScores');
 
+//Various array used
 const styles = [title, instructionsPara, instructionsTitle, highScoreButton, instructionsSection, startButton];
 const asteroids = [];
+const scorePlacement = [score1 = {score: 0, name: "???", number: "1st"},  score2 = {score: 0, name: "???", number: "2nd"}, score3 = {score: 0, name: "???", number: "3rd"}, score4 = {score: 0, name: "???", number: "4th"}, score5 = {score: 0, name: "???", number: "5th"}];
+
+//Various variables used
 let health = 5;
 let score = 0;
 let highScore = -Infinity;
@@ -183,7 +191,6 @@ const startIntervals = function() {
       };
       let iteration = asteroids.length;
       for (let count = 0; count < iteration; count++) {
-        console.log("second ran");
         asteroids.splice(asteroids[0], 1);
       };
 
@@ -216,6 +223,7 @@ const startIntervals = function() {
         };
         health = 5;
         healthDisplay.textContent = health;
+        scoreList.style.color = "#00000000";
         score = 0;
         tracker = 0;
         statsArea.style.color = "white";
@@ -227,6 +235,29 @@ const startIntervals = function() {
     };
   }, 0);
 };
+
+highScoreButton.addEventListener("click", swap = () => {
+  highScoreButton.removeEventListener("click", swap);
+  scoreList.style.color = "white";
+  instructionsPara.style.color = "#00000000";
+  instructionsTitle.textContent = "HIGH SCORES";
+  highScoreButton.textContent = "RETURN";
+  for (items of scorePlacement) {
+    let placement = document.createElement("li");
+    places.appendChild(placement);
+    placement.textContent = items.number;
+  };
+  for (items of scorePlacement) {
+    let userName = document.createElement("li");
+    names.appendChild(userName);
+    userName.textContent = items.name;
+  };
+  for (items of scorePlacement) {
+    let userScores = document.createElement("li");
+    highScores.appendChild(userScores);
+    userScores.textContent = items.score;
+  };
+});
 
 const startGame = function() {
     startIntervals();
@@ -243,6 +274,7 @@ startButton.addEventListener("click", start => {
     index.style.border = "none";
 
   }
+  scoreList.style.color = "#00000000";
   statsArea.style.color = "white";
 
   startGame();

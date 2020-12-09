@@ -43,6 +43,7 @@ h2 {
 }
 
 section:first-of-type {
+  position: relative;
   width: 550px;
   height: 300px;
   border: 2px solid white;
@@ -108,4 +109,34 @@ h1 {
 .current-score {
     margin-top: 1vw;
     text-transform: uppercase;
+}
+
+li {
+  margin-bottom: 17px;
+  list-style: none;
+  font-size: 20px;
+  font-kerning: auto;
+}
+.scoreList {
+  position: absolute;
+  display: flex;
+  width: 550px;
+  height: 225px;
+  top: 75px;
+  left: 70px;
+}
+
+.placement {
+  width: 60px;
+  height: 225px;
+}
+
+.names {
+  width: 200px;
+  height: 225px;
+}
+
+.highScores {
+  width: 100px;
+  height: 225px;
 }
