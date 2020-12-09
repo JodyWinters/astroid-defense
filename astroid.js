@@ -59,7 +59,7 @@ const screenShake = function() {
     statsArea.style.left = "1vw";
     setTimeout( () => {
         statsArea.style.left = "2vw";
-        
+
         setTimeout( () => {
             if (shakeCounter < 10) {
                 screenShake();
@@ -169,12 +169,19 @@ const startIntervals = function() {
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
       removeIntervals();
-      for (a of asteroids) {
-          removeAsteroid(a);
-      }
+
+      for (image of asteroids) {
+        image.a.remove();
+      };
+      let iteration = asteroids.length;
+      for (let count = 0; count < iteration; count++) {
+        console.log("second ran");
+        asteroids.splice(asteroids[0], 1);
+      };
+
       for (index of styles) {
         index.style.color = "white";
-      }
+      };
 
       header.style.zIndex = "10";
       startButton.style.border = "2px solid white";
@@ -190,7 +197,6 @@ const startIntervals = function() {
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
       clearInterval(healthInterval);
-      const remove = asteroids.shift();
 
       startButton.addEventListener("click", startAgain => {
         startButton.removeEventListener("click", startAgain);
