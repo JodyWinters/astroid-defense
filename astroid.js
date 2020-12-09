@@ -19,9 +19,10 @@ let highScore = -Infinity;
 let tracker = 0;
 const startSpawnRate = 1000;
 let spawnRate = startSpawnRate;
+let spawnRateChange = 6;
 let gameStop = false;
-blinkCounter = 0;
-shakeCounter = 0;
+let blinkCounter = 0;
+let shakeCounter = 0;
 
 const removeIntervals = function() {
     clearInterval(moveInterval);
@@ -40,7 +41,7 @@ const removeAsteroid = function(ast) {
 
 const borderBlink = function() {
     blinkCounter++;
-    body.style.border = "5px solid rgb(255, 0, 0, 0.6)";
+    body.style.border = "10px solid rgb(255, 0, 0, 0.6)";
     setTimeout( () => {
         body.style.border = "none";
 
@@ -98,7 +99,8 @@ const moveAsteroid = function() {
 
 //Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
-    spawnRate -= 5;
+    spawnRate -= spawnRateChange;
+    spawnRateChange *= 0.99;
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
     asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
@@ -122,6 +124,7 @@ const makeAsteroid = function() {
     const ast = asteroid;
     ast.a.addEventListener("mousedown", asteroidClick);
 
+    //Unless the game is paused or ended, make another asteroid after a set amount of time
     setTimeout( () => {
         if (!gameStop) {
             makeAsteroid();
