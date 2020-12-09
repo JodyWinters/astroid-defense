@@ -1,7 +1,7 @@
 //querySelectors, variables and arrays for the project
 const spawnArea = document.querySelector(".asteroid-spawn");
 const body = document.querySelector("body");
-
+const healthDisplay = document.querySelector(".health").firstElementChild;
 const startButton = document.querySelector("button");
 const statsArea = document.querySelector(".stats");
 const highScoreButton = document.querySelector("button:last-of-type");
@@ -10,6 +10,7 @@ const instructionsSection = document.querySelector('.instructions');
 const instructionsPara = document.querySelector('p');
 const header = document.querySelector('header');
 const instructionsTitle = document.querySelector('h2');
+
 const styles = [title, instructionsPara, instructionsTitle, highScoreButton, instructionsSection, startButton];
 const asteroids = [];
 let health = 5;
@@ -19,6 +20,8 @@ let tracker = 0;
 const startSpawnRate = 1000;
 let spawnRate = startSpawnRate;
 let gameStop = false;
+blinkCounter = 0;
+shakeCounter = 0;
 
 const removeIntervals = function() {
     clearInterval(moveInterval);
@@ -35,6 +38,38 @@ const removeAsteroid = function(ast) {
     asteroids.splice(asteroids.indexOf(ast), 1);
 }
 
+const borderBlink = function() {
+    blinkCounter++;
+    body.style.border = "5px solid rgb(255, 0, 0, 0.6";
+    setTimeout( () => {
+        body.style.border = "none";
+
+        setTimeout( () => {
+            if (blinkCounter < 2) {
+                borderBlink();
+            } else {
+                blinkCounter = 0;
+            }
+        }, 100);
+    }, 100);
+}
+
+const screenShake = function() {
+    shakeCounter++;
+    statsArea.style.left = "1vw";
+    setTimeout( () => {
+        statsArea.style.left = "2vw";
+        
+        setTimeout( () => {
+            if (shakeCounter < 10) {
+                screenShake();
+            } else {
+                shakeCounter = 0;
+            }
+        }, 10);
+    }, 10);
+}
+
 //Moves the asteroid and removes it if it hits
 const moveAsteroid = function() {
     for (ast of asteroids) {
@@ -42,7 +77,9 @@ const moveAsteroid = function() {
         if (ast.growth >= 500) {
             removeAsteroid(ast);
             health--;
-            document.querySelector(".health").firstElementChild.textContent = health;
+            healthDisplay.textContent = health;
+            borderBlink();
+            screenShake();
 
         //If the asteroid didn't hit, move it
         } else {
@@ -62,7 +99,6 @@ const moveAsteroid = function() {
 //Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
     spawnRate -= 5;
-    console.log(spawnRate);
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
     asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
@@ -163,7 +199,7 @@ const startIntervals = function() {
           index.style.color = "#00000000";
         };
         health = 5;
-        document.querySelector(".health").firstElementChild.textContent = health;
+        healthDisplay.textContent = health;
         score = 0;
         tracker = 0;
         statsArea.style.color = "white";

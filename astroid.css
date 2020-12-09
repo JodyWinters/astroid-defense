@@ -11,6 +11,11 @@ body {
     justify-content: center;
     cursor: url('crosshair.png') 16 16, auto;
     background-image: url("space-background.jpeg");
+    position: relative;
+    top: 0;
+    left: 0;
+    transition-property: border;
+    transition-duration: 100ms;
 }
 
 header {
