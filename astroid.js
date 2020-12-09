@@ -40,7 +40,7 @@ const removeAsteroid = function(ast) {
 
 const borderBlink = function() {
     blinkCounter++;
-    body.style.border = "5px solid rgb(255, 0, 0, 0.6";
+    body.style.border = "5px solid rgb(255, 0, 0, 0.6)";
     setTimeout( () => {
         body.style.border = "none";
 
