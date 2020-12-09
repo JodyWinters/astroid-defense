@@ -24,6 +24,11 @@ let gameStop = false;
 let blinkCounter = 0;
 let shakeCounter = 0;
 
+//Preventing the images from being dragged
+window.ondragstart = function() {
+  return false;
+};
+
 const removeIntervals = function() {
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
@@ -172,7 +177,7 @@ const startIntervals = function() {
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
       removeIntervals();
-
+      //remove image of asteroid and then remove asteroid object from array
       for (image of asteroids) {
         image.a.remove();
       };
@@ -182,6 +187,7 @@ const startIntervals = function() {
         asteroids.splice(asteroids[0], 1);
       };
 
+      //Bringing the title screen back with new message
       for (index of styles) {
         index.style.color = "white";
       };
@@ -201,6 +207,7 @@ const startIntervals = function() {
       };
       clearInterval(healthInterval);
 
+      //allows start button to be pressed again to try again
       startButton.addEventListener("click", startAgain => {
         startButton.removeEventListener("click", startAgain);
         header.style.zIndex = "-10";
