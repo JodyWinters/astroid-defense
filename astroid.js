@@ -31,6 +31,7 @@ let spawnRateChange = 6;
 let gameStop = false;
 let blinkCounter = 0;
 let shakeCounter = 0;
+let onScoreScreen = false;
 
 //Preventing the images from being dragged
 window.ondragstart = function() {
@@ -206,13 +207,20 @@ const startIntervals = function() {
       statsArea.style.color = "#00000000";
       instructionsTitle.textContent = "Your ship had been destroyed"
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
+      highScoreButton.textContent = "HIGH SCORES";
       instructionsPara.style.whiteSpace = "pre-line";
+      onScoreScreen = "false";
       if (score > highScore) {
           highScore = score;
 
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
       clearInterval(healthInterval);
+
+      highScoreButton.addEventListener("click", swap = () => {
+        highScoreButton.removeEventListener("click", swap);
+        highScorePress();
+      });
 
       //allows start button to be pressed again to try again
       startButton.addEventListener("click", startAgain => {
@@ -236,8 +244,8 @@ const startIntervals = function() {
   }, 0);
 };
 
-highScoreButton.addEventListener("click", swap = () => {
-  highScoreButton.removeEventListener("click", swap);
+const highScorePress = function() {
+  onScoreScreen = "true";
   scoreList.style.color = "white";
   instructionsPara.style.color = "#00000000";
   instructionsTitle.textContent = "HIGH SCORES";
@@ -257,13 +265,49 @@ highScoreButton.addEventListener("click", swap = () => {
     highScores.appendChild(userScores);
     userScores.textContent = items.score;
   };
-});
+  highScoreButton.addEventListener("click", returnTo = () => {
+    highScoreButton.removeEventListener("click", returnTo);
+    returnButton();
+  });
+};
+
+const returnButton = function() {
+  console.log("I work");
+  onScoreScreen = false;
+  for (let count = 0; count < 15; count++) {
+    let thing = document.querySelector('li');
+    thing.remove();
+  };
+  instructionsPara.style.color = "white";
+  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause. \r\nGood luck and have fun!";
+  highScoreButton.textContent = "HIGH SCORE";
+  instructionsTitle.textContent = "INSTRUCTIONS";
+
+  highScoreButton.addEventListener("click", swap = () => {
+    highScoreButton.removeEventListener("click", swap);
+    highScorePress();
+  });
+};
 
 const startGame = function() {
+  if (onScoreScreen === true) {
+    highScoreButton.removeEventListener("click", returnTo);
+    for (let count = 0; count < 15; count++) {
+      let thing = document.querySelector('li');
+      thing.remove();
+    };
+  } else {
+    console.log("else part ran");
+    highScoreButton.removeEventListener("click", swap);
+  };
     startIntervals();
-
     body.addEventListener("keydown", pause);
-}
+};
+
+highScoreButton.addEventListener("click", swap = () => {
+  highScoreButton.removeEventListener("click", swap);
+  highScorePress();
+});
 
 //Listener that starts game when start button is pressed
 startButton.addEventListener("click", start => {
@@ -273,10 +317,9 @@ startButton.addEventListener("click", start => {
     index.style.color = "#00000000";
     index.style.border = "none";
 
-  }
+  };
   scoreList.style.color = "#00000000";
   statsArea.style.color = "white";
-
   startGame();
 });
 //startGame();
