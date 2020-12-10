@@ -43,8 +43,10 @@ const removeIntervals = function() {
     clearInterval(scoreInterval);
     clearTimeout(makePause);
     gameStop = true;
-
-    body.removeEventListener("keydown", pause);
+    body.removeEventListener("keydown", removeIntervals);
+    setTimeout( () => {
+        body.addEventListener("keydown", startIntervals);
+    }, 100);
 }
 
 //Takes an asteroid object and removes from both the screen, and from the array
@@ -144,16 +146,7 @@ const makeAsteroid = function() {
             makeAsteroid();
         }
     }, spawnRate);
-}
-
-const pause = function(event) {
-    if (event.key === " ") {
-        removeIntervals();
-
-        body.removeEventListener("keydown", pause);
-        body.addEventListener("keydown", startIntervals);
-    }
-}
+};
 
 const startIntervals = function() {
     if (!event || event.key === " "){
@@ -180,7 +173,9 @@ const startIntervals = function() {
   }, 100);
 
   body.removeEventListener("keydown", startIntervals);
-  body.addEventListener("keydown", pause);
+  setTimeout( () => {
+      body.addEventListener("keydown", removeIntervals);
+  }, 1000);
 
   const healthInterval = setInterval( () =>{
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
@@ -205,7 +200,7 @@ const startIntervals = function() {
       highScoreButton.style.border = "2px solid white";
       instructionsSection.style.border = "2px solid white";
       statsArea.style.color = "#00000000";
-      instructionsTitle.textContent = "Your ship had been destroyed"
+      instructionsTitle.textContent = "Your ship has been destroyed"
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       highScoreButton.textContent = "HIGH SCORES";
       instructionsPara.style.whiteSpace = "pre-line";
