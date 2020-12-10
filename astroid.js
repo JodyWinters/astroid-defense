@@ -39,14 +39,11 @@ window.ondragstart = function() {
 };
 
 const removeIntervals = function() {
+    console.log("intervals ended");
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
     clearTimeout(makePause);
     gameStop = true;
-    body.removeEventListener("keydown", removeIntervals);
-    setTimeout( () => {
-        body.addEventListener("keydown", startIntervals);
-    }, 100);
 }
 
 //Takes an asteroid object and removes from both the screen, and from the array
@@ -149,15 +146,18 @@ const makeAsteroid = function() {
 };
 
 const startIntervals = function() {
-    if (!event || event.key === " "){
-        makeTracker = setInterval( () => {
-            tracker++;
+    console.log(tracker);
+    console.log("intervals started");
+    gameStop = false;
+    body.addEventListener("keydown", checkKeyPause);
 
-            if (tracker >= 1000) {
-                tracker = 0;
-            }
-        }, 1);
-    }
+    makeTracker = setInterval( () => {
+        tracker++;
+
+        if (tracker >= 1000) {
+            tracker = 0;
+        }
+    }, 1);
 
   makePause = setTimeout( () => {
     makeAsteroid();
@@ -172,15 +172,16 @@ const startIntervals = function() {
       document.querySelector(".current-score").textContent = String(score).padStart(4, "0");
   }, 100);
 
-  body.removeEventListener("keydown", startIntervals);
-  setTimeout( () => {
-      body.addEventListener("keydown", removeIntervals);
-  }, 1000);
-
   const healthInterval = setInterval( () =>{
+      if (gameStop) {
+          clearInterval(healthInterval);
+      }
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
+        console.log("you died");
+        body.removeEventListener("keydown", checkKeyPause);
       removeIntervals();
+      clearInterval(healthInterval);
       //remove image of asteroid and then remove asteroid object from array
       for (image of asteroids) {
         image.a.remove();
@@ -210,7 +211,6 @@ const startIntervals = function() {
 
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
-      clearInterval(healthInterval);
       highScoreButton.addEventListener("click", swap = () => {
         highScoreButton.removeEventListener("click", swap);
         highScorePress();
@@ -285,6 +285,25 @@ const returnButton = function() {
   });
 };
 
+const checkKeyPause = function(event) {
+    if (event.key === " ") {
+        body.removeEventListener("keydown", checkKeyPause);
+        pause();
+    }
+}
+
+checkKeyResume = function(event) {
+    if (event.key === " ") {
+        body.removeEventListener("keydown", checkKeyResume);
+        startIntervals();
+    }
+}
+
+const pause = function() {
+    removeIntervals();
+    body.addEventListener("keydown", checkKeyResume);
+}
+
 const startGame = function() {
   if (onScoreScreen === true) {
     console.log("if ran");
@@ -298,7 +317,6 @@ const startGame = function() {
     highScoreButton.removeEventListener("click", swap);
   };
     startIntervals();
-//    body.addEventListener("keydown", pause);
 };
 
 highScoreButton.addEventListener("click", swap = () => {
@@ -319,4 +337,10 @@ startButton.addEventListener("click", start = () => {
   statsArea.style.color = "white";
   startGame();
 });
-//startGame();
+
+//Keeps the score and health up to date when the game is paused
+setInterval( () => {
+    tracker = tracker;
+    health = health;
+    score = score;
+}, 0);
