@@ -204,23 +204,25 @@ const startIntervals = function() {
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       highScoreButton.textContent = "HIGH SCORES";
       instructionsPara.style.whiteSpace = "pre-line";
-      onScoreScreen = "false";
+      onScoreScreen = false;
       if (score > highScore) {
           highScore = score;
 
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
       clearInterval(healthInterval);
-
       highScoreButton.addEventListener("click", swap = () => {
         highScoreButton.removeEventListener("click", swap);
         highScorePress();
       });
 
       //allows start button to be pressed again to try again
-      startButton.addEventListener("click", startAgain => {
+      startButton.addEventListener("click", startAgain = () => {
         startButton.removeEventListener("click", startAgain);
         header.style.zIndex = "-10";
+        highScoreButton.style.border = "none";
+        startButton.style.border = "none";
+        instructionsSection.style.border = "none";
         for (index of styles) {
           index.style.color = "#00000000";
         };
@@ -240,7 +242,7 @@ const startIntervals = function() {
 };
 
 const highScorePress = function() {
-  onScoreScreen = "true";
+  onScoreScreen = true;
   scoreList.style.color = "white";
   instructionsPara.style.color = "#00000000";
   instructionsTitle.textContent = "HIGH SCORES";
@@ -267,7 +269,6 @@ const highScorePress = function() {
 };
 
 const returnButton = function() {
-  console.log("I work");
   onScoreScreen = false;
   for (let count = 0; count < 15; count++) {
     let thing = document.querySelector('li');
@@ -286,17 +287,18 @@ const returnButton = function() {
 
 const startGame = function() {
   if (onScoreScreen === true) {
+    console.log("if ran");
     highScoreButton.removeEventListener("click", returnTo);
     for (let count = 0; count < 15; count++) {
       let thing = document.querySelector('li');
       thing.remove();
     };
   } else {
-    console.log("else part ran");
+    console.log("else ran");
     highScoreButton.removeEventListener("click", swap);
   };
     startIntervals();
-    body.addEventListener("keydown", pause);
+//    body.addEventListener("keydown", pause);
 };
 
 highScoreButton.addEventListener("click", swap = () => {
@@ -305,7 +307,7 @@ highScoreButton.addEventListener("click", swap = () => {
 });
 
 //Listener that starts game when start button is pressed
-startButton.addEventListener("click", start => {
+startButton.addEventListener("click", start = () => {
   startButton.removeEventListener("click", start);
   header.style.zIndex = "-10";
   for (index of styles) {
