@@ -14,6 +14,9 @@ const scoreList = document.querySelector('.scoreList');
 const places = document.querySelector('.placement');
 const names = document.querySelector('.names');
 const highScores = document.querySelector('.highScores');
+let playerName = "";
+let scoreTrade = 0;
+let nameTrade = "";
 
 //Various array used
 const styles = [title, instructionsPara, instructionsTitle, highScoreButton, instructionsSection, startButton];
@@ -36,6 +39,20 @@ let onScoreScreen = false;
 //Preventing the images from being dragged
 window.ondragstart = function() {
   return false;
+};
+
+const scoreBoardChange = function() {
+  for (lines of scorePlacement) {
+    if (score > lines.score) {
+      scoreTrade = lines.score;
+      lines.score = score;
+      score = scoreTrade;
+
+      nameTrade = lines.name;
+      lines.name = playerName;
+      playerName = nameTrade;
+    };
+  };
 };
 
 const removeIntervals = function() {
@@ -190,11 +207,7 @@ const startIntervals = function() {
       for (let count = 0; count < iteration; count++) {
         asteroids.splice(asteroids[0], 1);
       };
-
       //Bringing the title screen back with new message
-      for (index of styles) {
-        index.style.color = "white";
-      };
 
       header.style.zIndex = "10";
       startButton.style.border = "2px solid white";
@@ -211,6 +224,26 @@ const startIntervals = function() {
 
           document.querySelector(".high-score").textContent = String(highScore).padStart(4, "0");
       };
+      for (index of styles) {
+        index.style.color = "white";
+      };
+      setTimeout( () => {
+        if (score > scorePlacement[4].score) {
+          playerName = prompt("Insert a name for the score board!(Under 10 characters)");
+          if (!playerName) {
+            playerName = "The Guy";
+          }
+          while (playerName.length > 9) {
+            playerName = prompt("Please use a smaller name.");
+            if (!playerName) {
+              playerName = "The Guy";
+            };
+          };
+        };
+        scoreBoardChange();
+      }, 400);
+
+      clearInterval(healthInterval);
       highScoreButton.addEventListener("click", swap = () => {
         highScoreButton.removeEventListener("click", swap);
         highScorePress();
@@ -306,14 +339,12 @@ const pause = function() {
 
 const startGame = function() {
   if (onScoreScreen === true) {
-    console.log("if ran");
     highScoreButton.removeEventListener("click", returnTo);
     for (let count = 0; count < 15; count++) {
       let thing = document.querySelector('li');
       thing.remove();
     };
   } else {
-    console.log("else ran");
     highScoreButton.removeEventListener("click", swap);
   };
     startIntervals();
