@@ -106,7 +106,8 @@ h1 {
 }
 
 .health,
-.current-score {
+.current-score,
+.powerup {
     margin-top: 1vw;
     text-transform: uppercase;
 }
@@ -139,4 +140,18 @@ li {
 .highScores {
   width: 100px;
   height: 225px;
+}
+
+.powerup {
+  border: 1px solid white;
+  display: none;
+  height: 1.5vw;
+  margin-top: 2vw;
+  width: 10vw;
+}
+
+.powerup > div {
+  background-color: white;
+  height: 100%;
+  width: 0%;
 }
