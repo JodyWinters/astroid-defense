@@ -309,9 +309,12 @@ const startIntervals = function() {
         score = 0;
         tracker = 0;
         statsArea.style.color = "white";
+        powerup.style.display = "block";
         removeIntervals();
         gameStop = false;
         spawnRate = startSpawnRate;
+        powerupLevel = 0;
+        powerupLevelDisplay.style.width = 0;
         startGame();
       });
     };
