@@ -14,6 +14,9 @@ const scoreList = document.querySelector('.scoreList');
 const places = document.querySelector('.placement');
 const names = document.querySelector('.names');
 const highScores = document.querySelector('.highScores');
+const powerup = document.querySelector(".powerup");
+const powerupLevelDisplay = powerup.firstElementChild;
+
 let playerName = "";
 let scoreTrade = 0;
 let nameTrade = "";
@@ -35,6 +38,9 @@ let gameStop = false;
 let blinkCounter = 0;
 let shakeCounter = 0;
 let onScoreScreen = false;
+let powerupLevel = 0;
+let powerupMax = false;
+let powerupActivate = false;
 
 //Preventing the images from being dragged
 window.ondragstart = function() {
@@ -56,7 +62,6 @@ const scoreBoardChange = function() {
 };
 
 const removeIntervals = function() {
-    console.log("intervals ended");
     clearInterval(moveInterval);
     clearInterval(scoreInterval);
     clearTimeout(makePause);
@@ -127,10 +132,50 @@ const moveAsteroid = function() {
     }
 }
 
+//Make the asteroid explode, then disappear
+asteroidClick = function(ast) {
+    ast.a.setAttribute("src", "cosmic-explosion.jpg");
+    ast.growth = ast.growth - 100;
+
+    if (!powerupMax) {
+        powerupLevel += 2;
+        powerupLevelDisplay.style.width = powerupLevel + "%";
+
+        if (powerupLevel >= 100) {
+            powerupMax = true;
+
+            body.addEventListener("keydown", checkKeyPower);
+        }
+    }
+
+    let bombTimer = setTimeout(() => {
+        removeAsteroid(ast);
+    }, 100);
+}
+
+const checkKeyPower = function (event) {
+    if (event.key === "Enter") {
+        body.removeEventListener("keydown", checkKeyPower);
+        event.preventDefault();
+
+        for (ast of asteroids) {
+            asteroidClick(ast);
+        }
+        powerupActivate = true;
+        setTimeout( () => {
+            powerupActivate = false;
+            powerupLevelDisplay.style.width = "0";
+            powerupLevel = 0;
+            powerupMax = false;
+        }, 1000);
+    }
+}
+
 //Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
     spawnRate -= spawnRateChange;
     spawnRateChange *= 0.99;
+
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
     asteroid = {a: document.createElement("img"), height: rand2, velocity: .01, left: rand, size: 1, growth: 0};
@@ -143,16 +188,17 @@ const makeAsteroid = function() {
     spawnArea.appendChild(asteroid.a);
     asteroids.push(asteroid);
 
-    //Make it explode, then disappear when clicked
-    const asteroidClick = (event) => {
-        ast.a.setAttribute("src", "cosmic-explosion.jpg");
-        ast.growth = ast.growth - 100;
-        let bombTimer = setTimeout(() => {
-            removeAsteroid(ast);
-        }, 100);
-    }
     const ast = asteroid;
-    ast.a.addEventListener("mousedown", asteroidClick);
+
+    if (powerupActivate) {
+        setTimeout( () => {
+            asteroidClick(ast);
+        }, 1000);
+    }
+
+    ast.a.addEventListener("mousedown", () => {
+        asteroidClick(ast);
+    });
 
     //Unless the game is paused or ended, make another asteroid after a set amount of time
     setTimeout( () => {
@@ -163,8 +209,6 @@ const makeAsteroid = function() {
 };
 
 const startIntervals = function() {
-    console.log(tracker);
-    console.log("intervals started");
     gameStop = false;
     body.addEventListener("keydown", checkKeyPause);
 
@@ -195,7 +239,6 @@ const startIntervals = function() {
       }
     //If you die, stop making asteroids and delete all of the existing ones, and stop iterating throught the array
     if (health <= 0) {
-        console.log("you died");
         body.removeEventListener("keydown", checkKeyPause);
       removeIntervals();
       clearInterval(healthInterval);
@@ -218,6 +261,7 @@ const startIntervals = function() {
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       highScoreButton.textContent = "HIGH SCORES";
       instructionsPara.style.whiteSpace = "pre-line";
+      powerup.style.display = "none";
       onScoreScreen = false;
       if (score > highScore) {
           highScore = score;
@@ -265,9 +309,12 @@ const startIntervals = function() {
         score = 0;
         tracker = 0;
         statsArea.style.color = "white";
+        powerup.style.display = "block";
         removeIntervals();
         gameStop = false;
         spawnRate = startSpawnRate;
+        powerupLevel = 0;
+        powerupLevelDisplay.style.width = 0;
         startGame();
       });
     };
@@ -308,8 +355,8 @@ const returnButton = function() {
     thing.remove();
   };
   instructionsPara.style.color = "white";
-  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause. \r\nGood luck and have fun!";
-  highScoreButton.textContent = "HIGH SCORES";
+  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause, and press the enter key to activate the powerup. \r\nGood luck and have fun!";
+  highScoreButton.textContent = "HIGH SCORE";
   instructionsTitle.textContent = "INSTRUCTIONS";
 
   highScoreButton.addEventListener("click", swap = () => {
@@ -325,7 +372,7 @@ const checkKeyPause = function(event) {
     }
 }
 
-checkKeyResume = function(event) {
+const checkKeyResume = function(event) {
     if (event.key === " ") {
         body.removeEventListener("keydown", checkKeyResume);
         startIntervals();
@@ -359,6 +406,7 @@ highScoreButton.addEventListener("click", swap = () => {
 startButton.addEventListener("click", start = () => {
   startButton.removeEventListener("click", start);
   header.style.zIndex = "-10";
+  powerup.style.display = "block";
   for (index of styles) {
     index.style.color = "#00000000";
     index.style.border = "none";
