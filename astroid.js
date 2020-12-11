@@ -309,7 +309,7 @@ const returnButton = function() {
   };
   instructionsPara.style.color = "white";
   instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause. \r\nGood luck and have fun!";
-  highScoreButton.textContent = "HIGH SCORE";
+  highScoreButton.textContent = "HIGH SCORES";
   instructionsTitle.textContent = "INSTRUCTIONS";
 
   highScoreButton.addEventListener("click", swap = () => {

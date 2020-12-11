@@ -17,6 +17,7 @@ body {
     left: 0;
     transition-property: border;
     transition-duration: 100ms;
+
 }
 
 header {
@@ -31,7 +32,7 @@ header {
   font-family: 'Libre Baskerville', sans-serif, arial;
 }
 
-h1, section {
+h1, .instructions, .buttons {
   text-align: center;
   margin-bottom: 20px;
   margin-top: 20px;
@@ -42,7 +43,7 @@ h2 {
   padding-bottom: 20px;
 }
 
-section:first-of-type {
+.instructions {
   position: relative;
   width: 550px;
   height: 300px;
@@ -95,6 +96,7 @@ h1 {
     height: 400px;
     position: relative;
     width: 700px;
+    border: 3px solid red;
 }
 
 .stats {
@@ -140,3 +142,54 @@ li {
   width: 100px;
   height: 225px;
 }
+/*
+.spaceShip {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  border-top: 10vh solid #363648;
+  border-right: 8vw solid #363648;
+  border-left: 8vw solid #363648;
+  border-bottom: 10vh solid #363648;
+}
+
+.topRight {
+  position: fixed;
+  top: -10px;
+  right: 0;
+  height: 160px;
+  width: 350px;
+  background: #363648;
+  transform: skewY(30deg);
+}
+
+.topLeft {
+  position: fixed;
+  top: -10px;
+  left: 0;
+  height: 160px;
+  width: 350px;
+  background: #363648;
+  transform: skewY(-30deg);
+}
+
+.bottomLeft {
+  position: fixed;
+  bottom: -10px;
+  left: 0;
+  height: 160px;
+  width: 350px;
+  background: #363648;
+  transform: skewY(30deg);
+}
+
+.bottomRight {
+  position: fixed;
+  bottom: -10px;
+  right: 0;
+  height: 160px;
+  width: 350px;
+  background: #363648;
+  transform: skewY(-30deg);
+}
+*/
