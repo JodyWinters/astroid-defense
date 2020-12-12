@@ -154,7 +154,7 @@ asteroidClick = function(ast) {
 }
 
 const checkKeyPower = function (event) {
-    if (event.key === "Enter") {
+    if (event.key === "Shift") {
         body.removeEventListener("keydown", checkKeyPower);
         event.preventDefault();
 
@@ -355,7 +355,7 @@ const returnButton = function() {
     thing.remove();
   };
   instructionsPara.style.color = "white";
-  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause, and press the enter key to activate the powerup. \r\nGood luck and have fun!";
+  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause, and press the shift key to activate the powerup. \r\nGood luck and have fun!";
   highScoreButton.textContent = "HIGH SCORE";
   instructionsTitle.textContent = "INSTRUCTIONS";
 
