@@ -261,8 +261,9 @@ const startIntervals = function() {
       instructionsPara.textContent = "You had a score of " + score + ". Good Job! \r\nWould you like to play again?";
       highScoreButton.textContent = "HIGH SCORES";
       instructionsPara.style.whiteSpace = "pre-line";
-      powerup.style.display = "none";
       onScoreScreen = false;
+      powerupLevel = 0;
+      powerupLevelDisplay.style.width = 0;
       if (score > highScore) {
           highScore = score;
 
@@ -313,8 +314,6 @@ const startIntervals = function() {
         removeIntervals();
         gameStop = false;
         spawnRate = startSpawnRate;
-        powerupLevel = 0;
-        powerupLevelDisplay.style.width = 0;
         startGame();
       });
     };

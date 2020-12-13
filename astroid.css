@@ -96,7 +96,6 @@ h1 {
     height: 400px;
     position: relative;
     width: 700px;
-    border: 3px solid red;
 }
 
 .stats {
@@ -143,63 +142,130 @@ li {
   width: 100px;
   height: 225px;
 }
-/*
-.spaceShip {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  border-top: 10vh solid #363648;
-  border-right: 8vw solid #363648;
-  border-left: 8vw solid #363648;
-  border-bottom: 10vh solid #363648;
+
+.bottomRightAngle {
+  position: fixed;
+  bottom: 96px;
+  right: 40px;
+  height: 80px;
+  width: 100px;
+  background: #0b0b10;
+  z-index: 2;
+  transform: skewX(-45deg);
+  border-top: 4px solid white;
+  border-left: 4px solid white;
 }
 
-.topRight {
+.bottomLeftAngle {
   position: fixed;
-  top: -10px;
-  right: 0;
-  height: 160px;
-  width: 350px;
-  background: #363648;
-  transform: skewY(30deg);
+  bottom: 96px;
+  left: 40px;
+  height: 80px;
+  width: 100px;
+  background: #0b0b10;
+  z-index: 2;
+  transform: skewX(45deg);
+  border-top: 4px solid white;
+  border-right: 4px solid white;
 }
 
-.topLeft {
+.bottomBar {
   position: fixed;
-  top: -10px;
+  bottom: 0;
   left: 0;
-  height: 160px;
-  width: 350px;
-  background: #363648;
-  transform: skewY(-30deg);
+  height: 100px;
+  width: 100vw;
+  background: #0b0b10;
+  border-top: 4px solid white;
 }
 
 .bottomLeft {
   position: fixed;
-  bottom: -10px;
+  bottom: 0px;
   left: 0;
-  height: 160px;
-  width: 350px;
-  background: #363648;
-  transform: skewY(30deg);
+  height: 176px;
+  width: 100px;
+  background: #0b0b10;
 }
 
 .bottomRight {
   position: fixed;
-  bottom: -10px;
+  bottom: 0px;
   right: 0;
-  height: 160px;
-  width: 350px;
-  background: #363648;
-  transform: skewY(-30deg);
+  height: 176px;
+  width: 100px;
+  background: #0b0b10;
 }
-*/
+
+.buttonPanel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 13px;
+  right: 10vw;
+  width: 150px;
+  height: 65px;
+  background: #0b0b10;
+  z-index: 3;
+  border: 3px solid white;
+}
+
+.switch {
+  width: 30px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 2px
+}
+
+.button1 {
+  position: relative;
+  top: -5px;
+  left: 10px;
+  width: 25px;
+  height: 25px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.button2 {
+  position: relative;
+  top: 5px;
+  width: 25px;
+  height: 25px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.doubleBox {
+  position: fixed;
+  bottom: 13px;
+  left: 10vw;
+  width: 150px;
+  height: 65px;
+  border: 10px double white;
+  z-index: 3;
+}
+
 .powerup {
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 15px;
   border: 1px solid white;
-  display: none;
-  height: 1.5vw;
-  margin-top: 2vw;
-  width: 10vw;
+  height: 3vw;
+  width: 20vw;
+  z-index: 5;
+}
+
+.powerupText {
+  color: white;
+  position:fixed;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 65px;
+  font-size: 25px;
+  z-index: 5;
 }
 
 .powerup > div {
