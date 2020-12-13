@@ -16,6 +16,7 @@ const names = document.querySelector('.names');
 const highScores = document.querySelector('.highScores');
 const powerup = document.querySelector(".powerup");
 const powerupLevelDisplay = powerup.firstElementChild;
+const powerupText = document.querySelector(".powerupText");
 
 let playerName = "";
 let scoreTrade = 0;
@@ -142,6 +143,8 @@ asteroidClick = function(ast) {
         powerupLevelDisplay.style.width = powerupLevel + "%";
 
         if (powerupLevel >= 100) {
+            powerupText.style.color = "red";
+            powerupText.style.weight = "bold";
             powerupMax = true;
 
             body.addEventListener("keydown", checkKeyPower);
@@ -157,6 +160,8 @@ const checkKeyPower = function (event) {
     if (event.key === "Shift") {
         body.removeEventListener("keydown", checkKeyPower);
         event.preventDefault();
+        powerupText.style.color = "white";
+        powerupText.style.weight = "normal";
 
         for (ast of asteroids) {
             asteroidClick(ast);
@@ -264,6 +269,9 @@ const startIntervals = function() {
       onScoreScreen = false;
       powerupLevel = 0;
       powerupLevelDisplay.style.width = 0;
+      powerupText.style.color = "white";
+      powerupText.style.weight = "normal";
+      powerupMax = false;
       if (score > highScore) {
           highScore = score;
 
@@ -278,7 +286,7 @@ const startIntervals = function() {
           if (!playerName) {
             playerName = "The Guy";
           }
-          while (playerName.length > 9) {
+          while (playerName.length > 8) {
             playerName = prompt("Please use a smaller name.");
             if (!playerName) {
               playerName = "The Guy";
@@ -310,7 +318,6 @@ const startIntervals = function() {
         score = 0;
         tracker = 0;
         statsArea.style.color = "white";
-        powerup.style.display = "block";
         removeIntervals();
         gameStop = false;
         spawnRate = startSpawnRate;
@@ -354,7 +361,7 @@ const returnButton = function() {
     thing.remove();
   };
   instructionsPara.style.color = "white";
-  instructionsPara.textContent = "Your goal is to destroy all of the asteroids before they can harm your ship. Click on an asteroid with your mouse to destroy them. When your health reaches 0, it's game over. Press the space bar to pause, and press the shift key to activate the powerup. \r\nGood luck and have fun!";
+  instructionsPara.textContent = "Click on the asteroids to destroy them before they hit your ship. Press the space bar to pause. When the bar at the bottom is filled press the shift key to destroy all asteroids on screen. When your health reaches 0, it's game over. \r\nGood luck and have fun!";
   highScoreButton.textContent = "HIGH SCORE";
   instructionsTitle.textContent = "INSTRUCTIONS";
 
