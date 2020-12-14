@@ -37,6 +37,7 @@ let spawnRate = startSpawnRate;
 let spawnRateChange = 6;
 let gameStop = false;
 let blinkCounter = 0;
+let powerBlink = 0;
 let shakeCounter = 0;
 let onScoreScreen = false;
 let powerupLevel = 0;
@@ -133,6 +134,22 @@ const moveAsteroid = function() {
     }
 }
 
+const powerupBlink = function() {
+    powerBlink++;
+    powerupLevelDisplay.style.backgroundColor = "red";
+    setTimeout( () => {
+        powerupLevelDisplay.style.backgroundColor = "white";
+
+        setTimeout( () => {
+            if (powerBlink < 3) {
+                powerupBlink();
+            } else {
+                powerBlink = 0;
+            }
+        }, 300);
+    }, 300);
+};
+
 //Make the asteroid explode, then disappear
 asteroidClick = function(ast) {
     ast.a.setAttribute("src", "cosmic-explosion.jpg");
@@ -146,6 +163,7 @@ asteroidClick = function(ast) {
             powerupText.style.color = "red";
             powerupText.style.weight = "bold";
             powerupMax = true;
+            powerupBlink();
 
             body.addEventListener("keydown", checkKeyPower);
         }
