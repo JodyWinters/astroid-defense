@@ -51,6 +51,15 @@ h2 {
   padding: 20px 15px 0 15px;
 }
 
+.spaceShip {
+  z-index: 500;
+}
+
+.powerup,
+.powerupText {
+  z-index: 501;
+}
+
 section p {
   font-size: 20px;
   line-height: 1.5;
@@ -255,7 +264,6 @@ li {
   border: 1px solid white;
   height: 3vw;
   width: 20vw;
-  z-index: 5;
 }
 
 .powerupText {
@@ -265,7 +273,6 @@ li {
   margin-right: auto;
   bottom: 65px;
   font-size: 25px;
-  z-index: 5;
 }
 
 .powerup > div {
