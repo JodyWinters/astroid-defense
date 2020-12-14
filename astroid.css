@@ -221,7 +221,7 @@ li {
   align-items: center;
   position: fixed;
   bottom: 13px;
-  right: 10vw;
+  right: 15vw;
   width: 150px;
   height: 65px;
   background: #0b0b10;
@@ -256,19 +256,19 @@ li {
 
 .button3 {
   position: absolute;
-  top: 10px;
+  top: 20px;
   left: 15px;
 }
 
 .button4 {
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 15px;
 }
 
 .button5 {
   position: absolute;
-  top: 40px;
+  top: 50px;
   left: 37.5px;
 }
 
