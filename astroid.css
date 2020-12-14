@@ -275,7 +275,7 @@ li {
 .doubleBox {
   position: fixed;
   bottom: 13px;
-  left: 10vw;
+  left: 15vw;
   width: 150px;
   height: 65px;
   border: 10px double white;
