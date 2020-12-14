@@ -190,20 +190,29 @@ li {
 
 .bottomLeft {
   position: fixed;
-  bottom: 0px;
+  bottom: 90px;
   left: 0;
-  height: 176px;
+  height: 86px;
   width: 100px;
   background: #0b0b10;
+  z-index: 20;
+  border-top: 3px solid white;
 }
 
 .bottomRight {
   position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   bottom: 0px;
   right: 0;
   height: 176px;
   width: 100px;
   background: #0b0b10;
+  z-index: 20;
+  border-top: 3px solid white;
+  padding-top: 15px;
+  border-left: 2px solid white;
 }
 
 .buttonPanel {
@@ -227,23 +236,40 @@ li {
   border-radius: 2px
 }
 
-.button1 {
+.fakeButtons {
   position: relative;
-  top: -5px;
-  left: 10px;
   width: 25px;
   height: 25px;
   border: 2px solid white;
   border-radius: 50%;
 }
+.button1 {
+  position: relative;
+  top: -5px;
+  left: 10px;
+}
 
 .button2 {
   position: relative;
   top: 5px;
-  width: 25px;
-  height: 25px;
-  border: 2px solid white;
-  border-radius: 50%;
+}
+
+.button3 {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+
+.button4 {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.button5 {
+  position: absolute;
+  top: 40px;
+  left: 37.5px;
 }
 
 .doubleBox {
@@ -254,6 +280,13 @@ li {
   height: 65px;
   border: 10px double white;
   z-index: 3;
+}
+
+.button6, .button7, .button8, .button9, .button10, .button11 {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  width: 30px;
 }
 
 .powerup {
