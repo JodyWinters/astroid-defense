@@ -197,7 +197,7 @@ const checkKeyPower = function (event) {
 //Repeatedly makes an asteroid object, and adds it to the spawnArea and to an array
 const makeAsteroid = function() {
     spawnRate -= spawnRateChange;
-    spawnRateChange *= 0.99;
+    spawnRateChange *= 0.9901;
 
     const rand = Math.random() * spawnArea.clientWidth;
     const rand2 = Math.random() * spawnArea.clientHeight;
