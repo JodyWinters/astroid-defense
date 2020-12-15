@@ -313,3 +313,27 @@ li {
   height: 100%;
   width: 0%;
 }
+
+.fakeButtons {
+  background-color: rgb(122, 111, 153);
+}
+
+.switch {
+  background-color: blue;
+}
+
+.doubleBox {
+  background-color: rgb(161, 0, 0);
+}
+
+.bottomLeft,
+.buttonPanel,
+.bottomRight {
+  background-color: rgb(139, 139, 139);
+}
+
+.bottomBar,
+.bottomLeftAngle,
+.bottomRightAngle {
+  background-color: rgb(59, 59, 59);
+}
